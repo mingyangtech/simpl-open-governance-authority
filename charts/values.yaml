@@ -1,0 +1,176 @@
+values:
+  repo_URL: https://code.europa.eu/simpl/simpl-open/development/agents/governance-authority.git
+  branch: v1.3.0
+
+project: ${PROJECT}
+domainSuffix: ${DOMAINSUFFIX}
+namespaceTag:
+  authority: ${AUTHNAMESPACETAG}
+  common: ${COMMONSPACETAG}
+
+argocd:
+  appname: ${NAMESPACE}
+  namespace: argocd
+
+cluster:
+  address: https://kubernetes.default.svc
+  namespace: ${NAMESPACE}
+  commonToolsNamespace: ${COMMONNAMESPACE}
+  issuer: ${CLUSTERISSUER}
+
+hashicorp:
+  service: "https://vault.common.domainsuffix"
+  role: dev-int-role
+  secretEngine: ${SECRETENGINE}
+
+keycloak:
+  repo_URL: 'https://charts.bitnami.com/bitnami'
+  chart_name: keycloak
+  targetRevision: 22.2.5
+  nameOverride: keycloak
+  resourcesPreset: "none"
+  resources:
+    requests:
+      cpu: "0"
+      memory: "0"
+  valueFiles:
+    - values.yaml
+
+ejbca:
+  repo_URL: 'https://keyfactor.github.io/ejbca-community-helm'
+  targetRevision: 1.0.7
+  chart_name: ejbca-community-helm
+  fullnameOverride: ejbca-community-helm
+  resources:
+    requests:
+      cpu: "0"
+      memory: "0"
+  valueFiles:
+    - values.yaml
+
+tier1_gateway:
+  projectID: "772"
+  targetRevision: 1.5.0
+  chart_name: tier1-gateway
+  resources:
+    requests:
+      cpu: "0"
+      memory: "0"
+  valueFiles:
+    - values.yaml
+
+simpl_fe:
+  projectID: "769"
+  targetRevision: 1.5.4
+  chart_name: simpl-fe
+  resources:
+    requests:
+      cpu: "0"
+      memory: "0"
+  valueFiles:
+    - values.yaml
+    - values-authority.yaml
+
+sap:
+  projectID: "861"
+  targetRevision: 1.5.0
+  chart_name: security-attributes-provider
+  resources:
+    requests:
+      cpu: "0"
+      memory: "0"
+  valueFiles:
+    - values.yaml
+
+users_roles:
+  projectID: "771"
+  targetRevision: 1.5.0
+  chart_name: users-roles
+  resources:
+    requests:
+      cpu: "0"
+      memory: "0"
+  valueFiles:
+    - values.yaml
+
+xsfc_catalogue:
+  enabled: true
+  projectID: "820"
+  targetRevision: 1.0.7
+  chart_name: fc-service
+  resources:
+    requests:
+      cpu: "0"
+      memory: "0"
+  valueFiles:
+    - values.yaml
+
+onboarding:
+  projectID: "770"
+  targetRevision: 1.5.0
+  chart_name: onboarding
+  resources:
+    requests:
+      cpu: "0"
+      memory: "0"
+
+adapter:
+  enabled: true
+  projectID: "759"
+  targetRevision: 1.0.6
+  chart_name: poc-charts
+  fullnameOverride: adapter
+  valueFiles:
+    - values.yaml
+
+tier2_gateway:
+  projectID: "860"
+  targetRevision: 1.5.0
+  chart_name: tier2-gateway
+  resources:
+    requests:
+      cpu: "0"
+      memory: "0"
+  valueFiles:
+    - values.yaml
+    - values-routes-authority.yaml
+
+identity_provider:
+  projectID: "913"
+  targetRevision: 1.5.0
+  chart_name: identity-provider
+  fullnameOverride: identity-provider
+  resources:
+    requests:
+      cpu: "0"
+      memory: "0"
+  valueFiles:
+    - values.yaml
+
+auth_provider:
+  projectID: "939"
+  targetRevision: 1.5.0
+  chart_name: authentication-provider
+  resources:
+    requests:
+      cpu: "0"
+      memory: "0"
+  valueFiles:
+    - values.yaml
+
+monitoring:
+  enabled: true
+  projectID: "828"
+  targetRevision: 0.1.14
+  chart_name: eck-monitoring
+  fullnameOverride: elastic
+  valueFiles:
+    - values.yaml
+
+simpl_cli:
+  projectID: "882"
+  targetRevision: 1.5.0
+  chart_name: simpl-cli
+  fullnameOverride: simpl-cli
+  valueFiles:
+    - values.yaml
